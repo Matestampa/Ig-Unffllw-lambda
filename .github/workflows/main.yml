@@ -1,0 +1,33 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  
+  deploy_lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      
+      - name: install dependencies #instalar dependencias (en este caso estamos con node)
+        run: |
+          npm ci
+      
+      - name: build zipp #hacer zip (bundleamos el archivo, y luego lo hacemos zip)
+        run: |
+          npx ncc build index.js
+          zip -j deploy.zip ./dist/*
+      
+      - name: Configure AWS Credentials #setear credenciales, para poder acceder a lambda y cambiar la data
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: deploy #actualizar la lambda con el nuevo codigo
+        run: |
+          aws lambda update-function-code --function-name=${{ vars.LAMBDA_NAME }} --zip-file=fileb://deploy.zip
+        
