@@ -17,7 +17,7 @@ jobs:
       
       - name: build zipp
         run: |
-          zip -j deploy.zip ./*
+          zip -r deploy.zip ./*
       
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
