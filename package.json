@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@vercel/ncc": "^0.38.1",
     "node-fetch": "^2.7.0"
   }
 }
