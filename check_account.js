@@ -49,17 +49,20 @@ async function checkAccount(username){
 }
 
 function evaluateHtmlSize(size) {
-    const existsSize = 489000;
+    /*const existsSize = 489000;
     const notExistsSize = 369000;
-    const tolerance = 10000;
-  
-    if (Math.abs(size - existsSize) <= tolerance) {
+    const tolerance = 10000;*/
+
+    const limit_Exist_NotExist=405000;
+
+    if (size>=limit_Exist_NotExist){
       return true;
-    } else if (Math.abs(size - notExistsSize) <= tolerance) {
+    }
+    else{
       return false;
-    } else {
-      return null; // O puedes retornar otro valor predeterminado
     }
 }
+
+
 
 module.exports={checkAccount};
